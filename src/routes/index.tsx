@@ -1,24 +1,62 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Saudação | Bom dia, boa tarde ou boa noite" },
+      {
+        name: "description",
+        content:
+          "Tela inicial que exibe uma saudação personalizada conforme o horário: bom dia, boa tarde ou boa noite.",
+      },
+      { property: "og:title", content: "Saudação do dia" },
+      {
+        property: "og:description",
+        content: "Uma saudação amigável baseada no horário atual.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+function getGreeting(hour: number) {
+  if (hour >= 5 && hour < 12) return { text: "Bom dia", emoji: "☀️" };
+  if (hour >= 12 && hour < 18) return { text: "Boa tarde", emoji: "🌤️" };
+  return { text: "Boa noite", emoji: "🌙" };
+}
+
 function Index() {
+  const [now, setNow] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setNow(new Date());
+    const id = setInterval(() => setNow(new Date()), 1000 * 30);
+    return () => clearInterval(id);
+  }, []);
+
+  const greeting = getGreeting(now?.getHours() ?? 0);
+  const timeLabel = now
+    ? now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })
+    : "--:--";
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted px-6">
+      <section className="max-w-xl text-center">
+        <div className="text-6xl" aria-hidden>
+          {now ? greeting.emoji : "✨"}
+        </div>
+        <h1 className="mt-6 text-5xl font-bold tracking-tight text-foreground sm:text-6xl">
+          {now ? `${greeting.text}!` : "Olá!"}
+        </h1>
+        <p className="mt-4 text-lg text-muted-foreground">
+          {now
+            ? `São ${timeLabel} — que seu dia seja incrível.`
+            : "Carregando horário..."}
+        </p>
+      </section>
+    </main>
   );
 }
