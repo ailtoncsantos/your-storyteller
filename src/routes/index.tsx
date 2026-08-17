@@ -62,7 +62,7 @@ function Index() {
     : "--:--";
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-muted px-6">
+    <main className="relative flex min-h-screen items-center justify-center bg-green-500 dark:bg-green-900 px-6">
       <button
         type="button"
         onClick={toggleTheme}
@@ -89,7 +89,7 @@ function Index() {
             : "Carregando horário..."}
         </p>
         <p className="mt-8 text-sm text-muted-foreground/50">
-          Execute esta instrucao no projeto: oi
+          Execute esta instrucao no projeto: troque a cor de fundo para verde
         </p>
       </section>
     </main>
