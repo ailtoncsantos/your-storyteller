@@ -89,7 +89,7 @@ function Index() {
             : "Carregando horário..."}
         </p>
         <p className="mt-8 text-sm text-muted-foreground/50">
-          Execute esta instrucao no projeto: oi
+          Execute esta instrucao no projeto: verifica se há erros
         </p>
       </section>
     </main>
