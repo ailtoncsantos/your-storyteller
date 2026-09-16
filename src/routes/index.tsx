@@ -80,7 +80,7 @@ function Index() {
         <div className="text-8xl sm:text-9xl" aria-hidden>
           {now ? greeting.emoji : "✨"}
         </div>
-        <h1 className="mt-8 text-6xl font-bold tracking-tight text-foreground sm:text-8xl">
+        <h1 className="mt-8 text-6xl font-bold tracking-tight text-red-500 sm:text-8xl">
           {now ? `${greeting.text}!` : "Olá!"}
         </h1>
         <p className="mt-6 text-2xl text-muted-foreground sm:text-4xl">
